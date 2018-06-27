@@ -9,10 +9,5 @@ class WelcomeController
     {
         echo app()->render("index");
     }
-
-    public function greet($name)
-    {
-        echo app()->render("greet", $name=$name);
-    }
 }
 
