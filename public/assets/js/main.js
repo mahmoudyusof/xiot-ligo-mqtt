@@ -24,8 +24,7 @@ $(document).ready(()=>{
             onFailure: (res) => {
                 $("#con-status").attr("class", "text-danger");
                 $("#con-status").text("Connection failed: " + res.errorMessage);
-            },
-            useSSL: true
+            }
         }
         if (username !== "" && password !== ""){
             options.userName = username;
