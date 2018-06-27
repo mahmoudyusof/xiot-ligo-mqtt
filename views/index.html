@@ -2,8 +2,48 @@
 
 {% block title %}Home{% endblock %}
 {% block body %}
-    <div class="welcome">
-        <h1>LIGO</h1>
-        <p style="font-weight: 500;">Welcome to the LIGO framework.</p>
-    </div>
+
+<h2>Connection</h2>
+<div id="con-status"></div>
+<form id="con-form">
+    <input type="text" name="host" id="host" placeholder="Host">
+    <br><br>
+    <input type="text" name="port" id="port" placeholder="Port">
+    <br><br>
+    <input type="text" name="cid" id="cid" placeholder="ClientId">
+    <br><br>
+    <input type="text" name="username" id="username" placeholder="Username">
+    <br><br>
+    <input type="password" name="password" id="password" placeholder="Password">
+    <br><br>
+    <input type="submit" value="Connect">
+</form>
+
+<h2>Subscribe</h2>
+<div id="sub-status"></div>
+<form id="sub-form">
+    <input type="text" name="topic" id="topic" placeholder="Topic">
+    <br><br>
+    <input type="text" name="qos" id="qos" placeholder="QoS">
+    <br><br>
+    <input type="submit" value="Subscribe">
+</form>
+
+
+<h2>Publish</h2>
+<div id="pub-status"></div>
+<form id="pub-form">
+    <input type="text" name="topic" id="pub-topic" placeholder="Topic">
+    <br><br>
+    <input type="text" name="qos" id="pub-qos" placeholder="QoS">
+    <br><br>
+    <textarea name="payload" id="payload" placeholder="Message"></textarea>
+    <br><br>
+    <input type="submit" value="Publish">
+</form>
+
+<div id="messages">
+    
+</div>
+
 {% endblock %}
