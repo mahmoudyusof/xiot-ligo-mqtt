@@ -3,6 +3,7 @@ $(document).ready(()=>{
     var con = $("#con-form");
     con.on("submit", (e) => {
         e.preventDefault();
+        loader("con-status");
         var host = $("#host").val();
         var port = parseInt($("#port").val());
         var username = $("#username").val();
@@ -17,6 +18,8 @@ $(document).ready(()=>{
             onSuccess: () => {
                 $("#con-status").attr("class", "text-success");
                 $("#con-status").text("Connected");
+                document.getElementById("sub-btn").removeAttribute("disabled");
+                document.getElementById("pub-btn").removeAttribute("disabled");
             },
             onFailure: (res) => {
                 $("#con-status").attr("class", "text-danger");
@@ -31,17 +34,19 @@ $(document).ready(()=>{
         client.onConnectionLost = (res) => {
             $("#con-status").attr("class", "text-danger");
             $("#con-status").text("Connection failed: " + res.errorMessage);
+            document.getElementById("sub-btn").setAttribute("disabled");
+            document.getElementById("pub-btn").setAttribute("disabled");
         };
         client.onMessageArrived = (msg) => {
             makeMessage(msg.payloadString, msg.destinationName, msg.qos, msg.retained);
         };
-        console.log(client);
     });
 
 
     var sub = $("#sub-form");
     sub.on("submit", (e) => {
         e.preventDefault();
+        loader("sub-status");
         var topic = $("#topic").val();
         var qos = parseInt($("#qos").val());
         try{
@@ -56,13 +61,14 @@ $(document).ready(()=>{
             }
         }catch(e){
             $("#sub-status").attr("class", "text-danger");
-            $("#sub-status").text(e);
+            $("#sub-status").text("Something went wrong. Please reconnect and try again");
         }
     });
 
     var pub = $("#pub-form");
     pub.on("submit", (e) => {
         e.preventDefault();
+        loader("pub-status");
         var pub_topic = $("#pub-topic").val();
         var pub_qos = parseInt($("#pub-qos").val());
         var payload = $("#payload").val();
@@ -72,10 +78,10 @@ $(document).ready(()=>{
         try{
             client.send(message);
             $("#pub-status").attr("class", "text-success");
-            $("#pub-status").text("sent");
+            $("#pub-status").text("Published");
         }catch (e){
             $("#pub-status").attr("class", "text-danger");
-            $("#pub-status").text(e);
+            $("#pub-status").text("Something went wrong. Please reconnect and try again");
         }
     });
 });
@@ -122,7 +128,15 @@ function unsub(element){
         var parent = sub.parentElement;
         parent.removeChild(sub);
     }catch (e){
-        console.log(e);
+        alert("Something went wrong. Please reconnect and try again");
     };
 };
 
+
+function loader(id) {
+    var wheel = document.createElement("div");
+    var element = document.getElementById(id);
+    wheel.className = "wheel";
+    element.innerHTML = wheel.outerHTML;
+    console.log(element);
+}

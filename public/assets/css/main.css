@@ -16,7 +16,7 @@ nav{
     font-style: italic;
     font-weight: 400;
 }
-.row{
+.container{
     background-color: white;
     border-radius: 5px;
 }
@@ -44,3 +44,33 @@ span{
     max-height: 300px;
     overflow: scroll;
 }
+.wheel{
+    background-color: #315cfa;
+    border-radius: 50%;
+    transform: translateY(10px) scale(1);
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    animation: spin 1s ease-in-out infinite;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+}
+.msgs{
+    border-radius: 5px;
+    border: solid #aaa 1px;
+}
+
+@keyframes spin{
+    0%{
+        opacity: 1;
+        transform: scale(1) translateY(10px);
+    }
+    100%{
+        opacity: 0;
+        transform: scale(3) translateY(0);
+    }
+}
+
+

@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-<div class="row my-4 p-5">
+<div class="row my-4">
     <div class="col-lg-8">
         <h2>Connection</h2>
         <form id="con-form">
@@ -11,9 +11,9 @@
             <br>
             <input type="text" name="port" id="port" class="form-control" placeholder="Port">
             <br>
-            <input type="text" style="width: 33%; display: inline-block;" name="cid" id="cid" class="form-control" placeholder="ClientId">
-            <input type="text" style="width: 33%; display: inline-block;" name="username" id="username" class="form-control" placeholder="Username">
-            <input type="password" style="width: 33%; display: inline-block;" name="password" id="password" class="form-control" placeholder="Password">
+            <input type="text" style="width: 25%; display: inline-block;" name="cid" id="cid" class="form-control" placeholder="ClientId">
+            <input type="text" style="width: 35%; display: inline-block;" name="username" id="username" class="form-control" placeholder="Username">
+            <input type="password" style="width: 35%; display: inline-block;" name="password" id="password" class="form-control" placeholder="Password">
             <br><br>
             <input type="submit" class="btn btn-primary" value="Connect">
             <span id="con-status"></span>
@@ -22,34 +22,73 @@
     <div class="col-lg-4" id="subs">
         <h2>Subscribtions</h2>
     </div>
-    <div class="col-lg-6">
-        <h2>Subscribe</h2>
-        <form id="sub-form">
-            <input type="text" name="topic" id="topic" class="form-control" placeholder="Topic">
-            <br>
-            <input type="text" name="qos" id="qos" class="form-control" placeholder="QoS">
-            <br>
-            <input type="submit" class="btn btn-primary" value="Subscribe">
-            <span id="sub-status"></span>
-        </form>
-    </div>
-    <div class="col-lg-6">
-        <h2>Publish</h2>
-        <form id="pub-form">
-            <input type="text" name="topic" id="pub-topic" class="form-control" placeholder="Topic">
-            <br>
-            <input type="text" name="qos" id="pub-qos" class="form-control" placeholder="QoS">
-            <br>
-            <textarea name="payload" id="payload" class="form-control" placeholder="Message"></textarea>
-            <br>
-            <input type="submit" class="btn btn-primary" value="Publish">
-            <span id="pub-status"></span>
-        </form>
-    </div>
-    <div class="col-lg-12">
-        <h2>Messages</h2>
-        <div id="messages"></div>
+</div>
+<div class="btns mb-3">
+    <button disabled="true" class="btn btn-primary btn-lg" data-toggle="modal" id="sub-btn" data-target="#SubscribeForm">Make Subscribtion</button>
+    <button disabled="true" class="btn btn-primary btn-lg" data-toggle="modal" id="pub-btn" data-target="#PublishForm">Publish Message</button>
+</div>
+
+<div class="msgs pb-5 px-3">
+    <h2>Messages</h2>
+    <div id="messages"></div>
+</div>
+
+
+
+<div class="modal fade" id="SubscribeForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Subscribe</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="sub-form">
+                    <input type="text" name="topic" id="topic" class="form-control" placeholder="Topic">
+                    <br>
+                    <input type="text" name="qos" id="qos" class="form-control" placeholder="QoS">
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Subscribe"> <span id="sub-status"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="PublishForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Publish</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="pub-form">
+                    <input type="text" name="topic" id="pub-topic" class="form-control" placeholder="Topic">
+                    <br>
+                    <input type="text" name="qos" id="pub-qos" class="form-control" placeholder="QoS">
+                    <br>
+                    <textarea name="payload" id="payload" class="form-control" placeholder="Message"></textarea>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Publish"> <span id="pub-status"></span>
+                    <span id="pub-status"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock %}
