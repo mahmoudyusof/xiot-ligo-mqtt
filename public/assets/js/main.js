@@ -5,19 +5,33 @@ $(document).ready(()=>{
         e.preventDefault();
         var host = $("#host").val();
         var port = parseInt($("#port").val());
-        client = new Paho.MQTT.Client(host, port, "dfksjdh");
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var clientId = $("#cid").val();
+        if (clientId === ""){
+            clientId = "randomness";
+        }
+        client = new Paho.MQTT.Client(host, port, clientId);
         var options = {
             timeout: 3,
             onSuccess: () => {
                 $("#con-status").attr("class", "text-success");
                 $("#con-status").text("Connected");
             },
-            onFailure: () => {
+            onFailure: (res) => {
                 $("#con-status").attr("class", "text-danger");
-                $("#con-status").text("Connection failed: " + message.errorMessage);
+                $("#con-status").text("Connection failed: " + res.errorMessage);
             },
         }
+        if (username !== "" && password !== ""){
+            options.userName = username;
+            options.password = password;
+        }
         client.connect(options);
+        client.onConnectionLost = (res) => {
+            $("#con-status").attr("class", "text-danger");
+            $("#con-status").text("Connection failed: " + res.errorMessage);
+        };
         client.onMessageArrived = (msg) => {
             makeMessage(msg.payloadString, msg.destinationName, msg.qos, msg.retained);
         };
