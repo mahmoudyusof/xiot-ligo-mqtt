@@ -3,47 +3,50 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-<h2>Connection</h2>
-<div id="con-status"></div>
-<form id="con-form">
-    <input type="text" name="host" id="host" placeholder="Host">
-    <br><br>
-    <input type="text" name="port" id="port" placeholder="Port">
-    <br><br>
-    <input type="text" name="cid" id="cid" placeholder="ClientId">
-    <br><br>
-    <input type="text" name="username" id="username" placeholder="Username">
-    <br><br>
-    <input type="password" name="password" id="password" placeholder="Password">
-    <br><br>
-    <input type="submit" value="Connect">
-</form>
-
-<h2>Subscribe</h2>
-<div id="sub-status"></div>
-<form id="sub-form">
-    <input type="text" name="topic" id="topic" placeholder="Topic">
-    <br><br>
-    <input type="text" name="qos" id="qos" placeholder="QoS">
-    <br><br>
-    <input type="submit" value="Subscribe">
-</form>
-
-
-<h2>Publish</h2>
-<div id="pub-status"></div>
-<form id="pub-form">
-    <input type="text" name="topic" id="pub-topic" placeholder="Topic">
-    <br><br>
-    <input type="text" name="qos" id="pub-qos" placeholder="QoS">
-    <br><br>
-    <textarea name="payload" id="payload" placeholder="Message"></textarea>
-    <br><br>
-    <input type="submit" value="Publish">
-</form>
-
-<div id="messages">
-    
+<div class="row my-4 p-5">
+    <div class="col-lg-12">
+        <h2>Connection</h2>
+        <form id="con-form">
+            <input type="text" name="host" id="host" class="form-control" placeholder="Host">
+            <br>
+            <input type="text" name="port" id="port" class="form-control" placeholder="Port">
+            <br>
+            <input type="text" style="width: 33%; display: inline-block;" name="cid" id="cid" class="form-control" placeholder="ClientId">
+            <input type="text" style="width: 33%; display: inline-block;" name="username" id="username" class="form-control" placeholder="Username">
+            <input type="password" style="width: 33%; display: inline-block;" name="password" id="password" class="form-control" placeholder="Password">
+            <br><br>
+            <input type="submit" class="btn btn-primary" value="Connect">
+            <span id="con-status"></span>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <h2>Subscribe</h2>
+        <form id="sub-form">
+            <input type="text" name="topic" id="topic" class="form-control" placeholder="Topic">
+            <br>
+            <input type="text" name="qos" id="qos" class="form-control" placeholder="QoS">
+            <br>
+            <input type="submit" class="btn btn-primary" value="Subscribe">
+            <span id="sub-status"></span>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <h2>Publish</h2>
+        <form id="pub-form">
+            <input type="text" name="topic" id="pub-topic" class="form-control" placeholder="Topic">
+            <br>
+            <input type="text" name="qos" id="pub-qos" class="form-control" placeholder="QoS">
+            <br>
+            <textarea name="payload" id="payload" class="form-control" placeholder="Message"></textarea>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Publish">
+            <span id="pub-status"></span>
+        </form>
+    </div>
+    <div class="col-lg-12">
+        <h2>Messages</h2>
+        <div id="messages"></div>
+    </div>
 </div>
 
 {% endblock %}

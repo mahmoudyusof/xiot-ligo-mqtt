@@ -4,55 +4,39 @@ body{
     background-color: #ebebeb;
 }
 nav{
-    background-color: #222;
-    padding: 0 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 20px 0;
+    background-color: #fff;
+    color: black;
+    font-family: "Raleway";
+    box-shadow: 0 0 6px 0 black;
 }
 #brand{
-    color: white;
     font-family: "Raleway";
     font-size: 1.5rem;
     font-style: italic;
     font-weight: 400;
 }
-.welcome{
-    font-weight: 300;
-}
-nav ul{
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    /* margin: auto 0 auto auto; */
-}
-nav a{
-    padding: 15px 20px;
-    font-family: Raleway;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: #e1e1e1;
-    text-decoration: none;
-    display: inline-block;
-}
-nav a:hover{
-    background-color: #000;
-    color: white;
-}
-.container{
-    text-align: center;
-    font-family: Raleway;
-    font-size: 1.3rem;
-    font-style: italic;
-    font-weight: 50;
-    margin: 20px;
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.row{
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
 }
-#greet{
-    font-size: 3rem;
+span{
+    font-weight: bold;
+}
+.messages{
+    max-height: 500px;
+    overflow: scroll;
+}
+.message{
+    margin: 10px 0;
+    border: 1px solid #666;
+}
+.msg-info{
+    display: flex;
+    justify-content: space-between;
+}
+.payload{
+    font-family: "Raleway";
+    font-weight: 400;
+    font-size: 1.3rem;
 }
