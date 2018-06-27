@@ -1,5 +1,5 @@
+var client;
 $(document).ready(()=>{
-    var client;
     var con = $("#con-form");
     con.on("submit", (e) => {
         e.preventDefault();
@@ -47,6 +47,7 @@ $(document).ready(()=>{
         try{
             if(client.isConnected){
                 client.subscribe(topic, {qos: qos});
+                addSub(topic, qos);
                 $("#sub-status").attr("class", "text-success");
                 $("#sub-status").text("Successful");
             }else{
@@ -91,9 +92,37 @@ function makeMessage(msg, topic, qos, retained){
     <div class="payload">
         ${msg}
     </div>
-    `
+    `;
     $("#messages").prepend(message);
 }
 
 
+function addSub(topic, qos){
+    var sub = document.createElement("div");
+    sub.className = "message px-3 pb-3";
+    sub.innerHTML = `
+        <button type="button" class="close" data-dismiss="sub" onclick="unsub(this)" id="${topic}" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="msg-info mb-2">
+            <span class="text-muted">qos: ${qos}</span>
+        </div> 
+        <div class="payload">
+            ${topic}
+        </div>
+    `;
+
+    $("#subs").append(sub);
+}
+
+function unsub(element){
+    try{
+        client.unsubscribe(element.id);
+        var sub = element.parentElement;
+        var parent = sub.parentElement;
+        parent.removeChild(sub);
+    }catch (e){
+        console.log(e);
+    };
+};
 
