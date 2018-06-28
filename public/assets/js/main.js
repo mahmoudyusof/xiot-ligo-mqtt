@@ -65,9 +65,7 @@ $(document).ready(()=>{
             if(lwt){
                 options.willMessage = lwt;
             }
-        }catch(err){
-            console.log(err);
-        }
+        }catch(err){}
 
         // and the little piece ends here
 
@@ -76,7 +74,7 @@ $(document).ready(()=>{
         }catch (e){
             $("#con-status").attr("class", "text-danger");
             $("#con-status").text("Failed to connect. Please try again.");
-            console.log(e);
+            // console.log(e);
         }
         client.onConnectionLost = (res) => {
             $("#con-status").attr("class", "text-danger");
@@ -84,6 +82,9 @@ $(document).ready(()=>{
             document.getElementById("discon").setAttribute("disabled", "true");
             document.getElementById("sub-btn").setAttribute("disabled", "true");
             document.getElementById("pub-btn").setAttribute("disabled", "true");
+            try{
+                delete options.willMessage;
+            }catch (e) {}
         };
         client.onMessageArrived = (msg) => {
             makeMessage(msg.payloadString, msg.destinationName, msg.qos, msg.retained);
@@ -129,7 +130,7 @@ $(document).ready(()=>{
         var message = new Paho.MQTT.Message(payload);
         message.destinationName = pub_topic;
         message.qos = pub_qos;
-        console.log(retain);
+        // console.log(retain);
         message.retained = retain;
         try{
             client.send(message);
@@ -203,7 +204,7 @@ function loader(id) {
     var element = document.getElementById(id);
     wheel.className = "wheel";
     element.innerHTML = wheel.outerHTML;
-    console.log(element);
+    // console.log(element);
 }
 
 
