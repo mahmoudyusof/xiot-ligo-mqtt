@@ -1,5 +1,8 @@
 var client;
 $(document).ready(()=>{
+
+    $("#cid").val(genId());
+
     var con = $("#con-form");
     con.on("submit", (e) => {
         e.preventDefault();
@@ -9,8 +12,32 @@ $(document).ready(()=>{
         var username = $("#username").val();
         var password = $("#password").val();
         var clientId = $("#cid").val();
+
+        // this part is for last will and testament
+        var lwtopic = $("#lwtopic").val();
+        var lwmsg = $("#lwmsg").val();
+
+        if(lwt !== "" && lwmsg !== ""){
+            var lwqos = parseInt($("#lwqos").val());
+            var lwretain = $("#lwretain").val();
+            if(lwretain == "on"){
+                lwretain = true;
+            }else{
+                lwretain = false;
+            }
+            
+            var lwt = new Paho.MQTT.Message(lwmsg);
+            lwt.qos = lwqos;
+            lwt.retained = lwretain;
+            lwt.destinationName = lwtopic;
+        }
+        // ends here
+
+
+        // this part is form connection
+
         if (clientId === ""){
-            clientId = "randomness";
+            clientId = genId();
         }
         client = new Paho.MQTT.Client(host, port, clientId);
         var options = {
@@ -18,6 +45,7 @@ $(document).ready(()=>{
             onSuccess: () => {
                 $("#con-status").attr("class", "text-success");
                 $("#con-status").text("Connected");
+                document.getElementById("discon").removeAttribute("disabled");
                 document.getElementById("sub-btn").removeAttribute("disabled");
                 document.getElementById("pub-btn").removeAttribute("disabled");
             },
@@ -30,12 +58,32 @@ $(document).ready(()=>{
             options.userName = username;
             options.password = password;
         }
-        client.connect(options);
+
+        // just a little piece for lw
+
+        try{
+            if(lwt){
+                options.willMessage = lwt;
+            }
+        }catch(err){
+            console.log(err);
+        }
+
+        // and the little piece ends here
+
+        try{
+            client.connect(options);
+        }catch (e){
+            $("#con-status").attr("class", "text-danger");
+            $("#con-status").text("Failed to connect. Please try again.");
+            console.log(e);
+        }
         client.onConnectionLost = (res) => {
             $("#con-status").attr("class", "text-danger");
-            $("#con-status").text("Connection failed: " + res.errorMessage);
-            document.getElementById("sub-btn").setAttribute("disabled");
-            document.getElementById("pub-btn").setAttribute("disabled");
+            $("#con-status").text("Disconnected");
+            document.getElementById("discon").setAttribute("disabled", "true");
+            document.getElementById("sub-btn").setAttribute("disabled", "true");
+            document.getElementById("pub-btn").setAttribute("disabled", "true");
         };
         client.onMessageArrived = (msg) => {
             makeMessage(msg.payloadString, msg.destinationName, msg.qos, msg.retained);
@@ -66,15 +114,23 @@ $(document).ready(()=>{
     });
 
     var pub = $("#pub-form");
-    pub.on("submit", (e) => {
+    pub.submit((e) => {
         e.preventDefault();
         loader("pub-status");
         var pub_topic = $("#pub-topic").val();
         var pub_qos = parseInt($("#pub-qos").val());
         var payload = $("#payload").val();
+        var retain = $("#retain").val();
+        if(retain == "on"){
+            retain = true;
+        }else{
+            retain = false;
+        }
         var message = new Paho.MQTT.Message(payload);
         message.destinationName = pub_topic;
         message.qos = pub_qos;
+        console.log(retain);
+        message.retained = retain;
         try{
             client.send(message);
             $("#pub-status").attr("class", "text-success");
@@ -84,6 +140,15 @@ $(document).ready(()=>{
             $("#pub-status").text("Something went wrong. Please reconnect and try again");
         }
     });
+
+    $("#discon").on("click", (e) => {
+        try{
+            client.disconnect();
+        }catch(err){
+            alert(err);
+        }
+    });
+
 });
 
 function makeMessage(msg, topic, qos, retained){
@@ -140,3 +205,16 @@ function loader(id) {
     element.innerHTML = wheel.outerHTML;
     console.log(element);
 }
+
+
+function genId(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (var i = 0; i < 10; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return "ligoId-" + text;
+}
+
+

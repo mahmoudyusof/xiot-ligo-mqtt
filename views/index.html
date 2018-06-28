@@ -7,14 +7,35 @@
     <div class="col-lg-8">
         <h2>Connection</h2>
         <form id="con-form">
-            <input type="text" name="host" id="host" class="form-control" placeholder="Host">
-            <br>
-            <input type="text" name="port" id="port" class="form-control" placeholder="Port">
-            <br>
-            <input type="text" style="width: 25%; display: inline-block;" name="cid" id="cid" class="form-control" placeholder="ClientId">
-            <input type="text" style="width: 35%; display: inline-block;" name="username" id="username" class="form-control" placeholder="Username">
-            <input type="password" style="width: 35%; display: inline-block;" name="password" id="password" class="form-control" placeholder="Password">
-            <br><br>
+            <div class="form-group mb-3">
+                <input type="text" required name="host" id="host" class="form-control" placeholder="Host">
+            </div>
+            <div class="form-group mb-3">
+                <input type="text" required name="port" id="port" class="form-control" placeholder="Port">
+            </div>
+            <div class="input-group mb-5">
+                <input type="text" name="cid" id="cid" class="form-control" placeholder="ClientId">
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" name="lwtopic" id="lwtopic" placeholder="lastWill Topic" class="form-control">
+                <div class="input-group-prepend"><label for="lwqos" class="input-group-text">QoS</label></div>
+                <select class="form-control" name="lwqos" id="lwqos" style="max-width: 20%;">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="lwretain">
+                <label class="form-check-label" for="lwretain">
+                    LastWill Retain
+                </label>
+            </div>
+            <div class="form-group mb-3">
+                <textarea name="lwmsg" id="lwmsg" placeholder="lastWill Message" class="form-control"></textarea>
+            </div>
             <input type="submit" class="btn btn-primary" value="Connect">
             <span id="con-status"></span>
         </form>
@@ -23,11 +44,13 @@
         <h2>Subscribtions</h2>
     </div>
 </div>
+<hr>
 <div class="btns mb-3">
-    <button disabled="true" class="btn btn-primary btn-lg" data-toggle="modal" id="sub-btn" data-target="#SubscribeForm">Make Subscribtion</button>
-    <button disabled="true" class="btn btn-primary btn-lg" data-toggle="modal" id="pub-btn" data-target="#PublishForm">Publish Message</button>
+    <button disabled class="btn btn-danger btn-lg" id="discon">Disconnect</button>
+    <button disabled class="btn btn-primary btn-lg" data-toggle="modal" id="sub-btn" data-target="#SubscribeForm">Make Subscribtion</button>
+    <button disabled class="btn btn-primary btn-lg" data-toggle="modal" id="pub-btn" data-target="#PublishForm">Publish Message</button>
 </div>
-
+<hr>
 <div class="msgs pb-5 px-3">
     <h2>Messages</h2>
     <div id="messages"></div>
@@ -46,10 +69,17 @@
             </div>
             <div class="modal-body">
                 <form id="sub-form">
-                    <input type="text" name="topic" id="topic" class="form-control" placeholder="Topic">
-                    <br>
-                    <input type="text" name="qos" id="qos" class="form-control" placeholder="QoS">
-                    <br>
+                    <div class="form-group mb-3">
+                        <input type="text" required name="topic" id="topic" class="form-control" placeholder="Topic">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><label for="qos" class="input-group-text">QoS</label></div>
+                        <select class="form-control" name="qos" id="qos">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
                     <input type="submit" class="btn btn-primary" value="Subscribe"> <span id="sub-status"></span>
                 </form>
             </div>
@@ -72,9 +102,23 @@
             </div>
             <div class="modal-body">
                 <form id="pub-form">
-                    <input type="text" name="topic" id="pub-topic" class="form-control" placeholder="Topic">
-                    <br>
-                    <input type="text" name="qos" id="pub-qos" class="form-control" placeholder="QoS">
+                    <div class="input-group mb-3">
+                        <input type="text" required name="topic" id="pub-topic" class="form-control" placeholder="Topic">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><label for="pub-qos" class="input-group-text">QoS</label></div>
+                        <select class="form-control" name="qos" id="pub-qos">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="retain">
+                        <label class="form-check-label" for="retain">
+                            Retained
+                        </label>
+                    </div>
                     <br>
                     <textarea name="payload" id="payload" class="form-control" placeholder="Message"></textarea>
                     <br>
