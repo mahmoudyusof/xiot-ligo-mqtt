@@ -31,3 +31,6 @@ Many approches were taken to accomplish this task as I have tried more than one 
 
 ### Experience
 I have gained a ton of experience throughout this process. This was the first time I use express and websockets. I have also learned about django websockets which is great because I intend to use django for personal business in the future and using websockets with it is gonna be great. I have reinforced my experience with AJAX and JQuery as well, so really thanks for giving me this challenge :).
+
+> **PS**<br>
+> I still have all of the code I've used (python, node, php) every thing. the ones that worked and the ones that didn't.
