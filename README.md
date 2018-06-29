@@ -39,5 +39,12 @@ php -S localhost:8000 -t public
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [QSA,L]
     ```
-    > **NOTE**: The .htaccess file already exists and set using appache so no need to worry about it
+    > **NOTE**: The .htaccess file already exists and set for using appache so no need to worry about it
 
+<br><br>
+> **NOTE**<br>
+> If you try to connect and the app seems to halt, you might want to refresh the page and try again. this is very unlikely to happen.
+> 
+> Make sure you're on http:// not https:// as most websocket requests are in ws:// not wss:// and if you have an ssl certificate it won't allow for ws requests.
+
+**Author:**&nbsp;&nbsp;&nbsp; Mahmoud Youssef @ &lt; mahmoud.yusof27@gmail.com &gt;
