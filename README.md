@@ -39,4 +39,5 @@ php -S localhost:8000 -t public
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [QSA,L]
     ```
+    > **NOTE**: The .htaccess file already exists and set using appache so no need to worry about it
 
