@@ -14,5 +14,7 @@ composer.phar
 !.vscode/extensions.json
 .history
 
+/public/.htaccess
+Procfile
 
 # End of https://www.gitignore.io/api/composer,visualstudiocode
